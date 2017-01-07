@@ -1,0 +1,28 @@
+{
+  "name": "simplegolf",
+  "version": "1.0.0",
+  "description": "some simple app for keeping track of golf scores",
+  "main": "server.js",
+  "scripts": {
+    "test": "node tests/dbtests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/capusta/simplegolf.git"
+  },
+  "keywords": [
+    "golf",
+    "score",
+    "gofscore",
+    "golfing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/capusta/simplegolf/issues"
+  },
+  "homepage": "https://github.com/capusta/simplegolf#readme",
+  "dependencies": {
+    "lokijs": "^1.4.2"
+  }
+}
