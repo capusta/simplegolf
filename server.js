@@ -7,6 +7,11 @@ var app     = express();
 var port    = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip      = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 
+//React views
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx');
+app.engine('jsx',require('express-react-views').createEngine());
+
 // Router Stuff
 app.use('/game',require('./routes/games'));
 app.use('/',require("./routes/public"));
