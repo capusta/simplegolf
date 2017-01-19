@@ -2,15 +2,10 @@ global.logger = require("./lib/logger.js");
 global.logger.log("Starting app");
 
 // Starting the App
-var express = require("express");
-var app     = express();
+'use strict';
+const app     = require('./app');
 var port    = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip      = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-
-//React views
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jsx');
-app.engine('jsx',require('express-react-views').createEngine());
 
 // Router Stuff
 app.use('/game',require('./routes/games'));
@@ -23,3 +18,4 @@ app.listen(port,ip,function(){
 // Don't need the supporting libraries just yet
 //var handler = require("./lib/handler.js");
 //handler.load("path","collection");
+// Damnit carson .. its wayy too late
