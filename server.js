@@ -1,21 +1,22 @@
-global.logger = require("./lib/logger.js");
-global.logger.log("Starting app");
-
-// Starting the App
 'use strict';
-const app     = require('./app');
+const express = require('express')
+    , app = express()
+    , React = require('react')
+    , path = require('path')
+    , logger = require('./lib/logger')
+
 var port    = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip      = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 
-// Router Stuff
-app.use('/game',require('./routes/games'));
-app.use('/',require("./routes/public"));
+// Express Router Stuff - mostly JSON calls
+app.use('/api',require('./routes/api'));
 
-app.listen(port,ip,function(){
-    global.logger.log("app listening on "+ip+":"+port);
+// React stuff ... routing and static display
+app.use(express.static(path.resolve(__dirname, 'build')));
+app.use('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
-// Don't need the supporting libraries just yet
-//var handler = require("./lib/handler.js");
-//handler.load("path","collection");
-// Damnit carson .. its wayy too late
+app.listen(port,ip,function(){
+    logger.log("app listening on "+ip+":"+port);
+});
