@@ -3,16 +3,12 @@
   "version": "1.0.0",
   "description": "some simple app for keeping track of golf scores",
   "main": "server.js",
-  "scripts": {
-    "test": "node tests/dbtests.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/capusta/simplegolf.git"
   },
   "keywords": [
     "golf",
-    "score",
     "gofscore",
     "golfing"
   ],
@@ -21,14 +17,18 @@
   "bugs": {
     "url": "https://github.com/capusta/simplegolf/issues"
   },
-  "homepage": "https://github.com/capusta/simplegolf#readme",
+  "devDependencies": {
+    "react-scripts": "0.8.5"
+  },
   "dependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "classnames": "^2.2.5",
+    "babel": "^6.5.2",
     "express": "^4.14.0",
+    "jade": "^1.11.0",
     "lokijs": "^1.4.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "test": "node tests/dbtests.js"
   }
 }
