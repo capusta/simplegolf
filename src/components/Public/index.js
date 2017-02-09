@@ -7,11 +7,19 @@ import './public.css';
 export default class Public extends Component {
 
   render() {
-    const { className, ...props } = this.props;
+      const { className, ...props } = this.props;
+      let btnclass = classnames('btn','btn-info')
+      let centerRow = classnames('row','text-center')
+
     return (
-      <div className={classnames('Public', className)} {...props}>
-          This is a public page
-      </div>
+        <div className={centerRow}>
+            <div className={classnames('row','text-center', className)} {...props}>
+                <p>... blah blah app ... blah blah ...</p>
+            </div>
+            <div className={centerRow}>
+                <a className={btnclass} href='/app' role="button">Start</a>
+            </div>
+        </div>
     );
   }
 }
