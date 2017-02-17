@@ -8,7 +8,7 @@ routes.get('/game/:gameid', (req, res) => {
     if(req.params.gameid == 'bad'){
         res.status(400).json({ error: true });
     } else {
-        res.status(200).json({ game_id: req.params.gameid, error: false });
+        res.status(200).json({ gameName: req.params.gameid, error: false });
     }
 });
 
