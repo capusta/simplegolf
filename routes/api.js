@@ -1,15 +1,36 @@
 // EXPRESS ROUTES
 
-const routes = require('express').Router();
-const logger = require('../lib/logger')
+const routes  = require('express').Router();
+const logger  = require('../lib/logger')
+const DATA_DIR = process.env.OPENSHIFT_DATA_DIR
+var fs   = require('fs'),
+    loki = require('lokijs'),
+    options = { autosave: true, autoload: true,
+        autosaveInterval: 1000}
 
-routes.get('/game/:gameid', (req, res) => {
-    //todo: check if the appropriate game id has been logged
-    if(req.params.gameid == 'bad'){
-        res.status(400).json({ error: true });
-    } else {
-        res.status(200).json({ gameName: req.params.gameid, error: false });
-    }
+routes.get('/games/:gameid', (req, res) => {
+    var gameID = req.params.gameid
+    var db_path = DATA_DIR+'/'+gameID+'.json';
+    var db = new loki(db_path, options)
+    db.loadDatabase({}, function(){
+        players = db.getCollection('players')
+        if (!players){
+            db.addCollection('players')
+        }
+        res.status(200).json({ gameName: gameID, error: false });
+    })
+});
+
+routes.get('/players/:gameid', (req, res) => {
+    var gameID = req.params.gameid
+    var db_path = DATA_DIR+'/'+gameID+'.json';
+    var results = []
+    var db = new loki(db_path, options)
+    db.loadDatabase({}, function(){
+        players = db.getCollection('players');
+        logger.log('players ' + JSON.stringify(players.data))
+        res.status(200).json(results)
+    })
 });
 
 module.exports = routes;

@@ -2,15 +2,32 @@ import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 
 export default class Game extends Component {
-
-  render() {
-    const { className, ...props } = this.props;
-    var players = this.props.players
-    return (
-      <div className={classnames('Game', className)} {...props}>
-        <h5> {this.props.gameName} </h5>
-        <p>{players}.</p>
-      </div>
-    );
-  }
+    constructor(props){
+        super(props)
+        this.state = {
+            players: [],
+            holes: [],
+            scores: [],
+            currentPlayer: null,
+            currentHole:   null,
+            currentScore:  null,
+        }
+    }
+    render() {
+        const { className, ...props } = this.props;
+        console.log("rendering game " + JSON.stringify(this.props))
+        if (this.props.gameName == null){
+            return (
+                <div className={classnames('Game', className)} {...props}>
+                    <p>'... please load ...'</p>
+                </div>
+            )
+        }
+        var players = this.props.getPlayers(this.props.gameName)
+        return (
+            <div className={classnames('Game', className)} {...props}>
+            <p>{this.state.players}.</p>
+            </div>
+        );
+    }
 }
