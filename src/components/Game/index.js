@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
+import Players from '../Players'
 
 export default class Game extends Component {
     //Props: gameName, setAlert
@@ -41,11 +42,11 @@ export default class Game extends Component {
                     // Update local state
                     that.setState({gameName: data.gameName});
                     // Grab initial player data
-                    that.getPlayers(data.gameName)
+                    that.loadPlayers(data.gameName)
                 }
             })
     }
-    getPlayers(gameID){
+    loadPlayers(gameID){
         var that = this;
         fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+gameID)
             .then(function(res){
@@ -58,7 +59,6 @@ export default class Game extends Component {
     }
     render() {
         const { className, ...props } = this.props;
-        var numPlayers = this.state.players.length
         if (this.state.gameName == null){
             return (
 				<div className={classnames('Game', className)} {...props}>
@@ -73,7 +73,8 @@ export default class Game extends Component {
         }
         return (
             <div className={classnames('Game', className)} {...props}>
-            <p>{numPlayers} players</p>
+                <Players gameName={this.state.gameName} players={this.state.players}
+                    setAlert={this.props.setAlert} loadPlayers={this.loadPlayers}/>
             </div>
         );
     }
