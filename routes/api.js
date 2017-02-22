@@ -16,20 +16,19 @@ routes.get('/games/:gameid', (req, res) => {
         players = db.getCollection('players')
         if (!players){
             db.addCollection('players')
+            db.save()
         }
-        res.status(200).json({ gameName: gameID, error: false });
+        res.status(200).json({ gameName: gameID });
     })
 });
 
 routes.get('/players/:gameid', (req, res) => {
     var gameID = req.params.gameid
     var db_path = DATA_DIR+'/'+gameID+'.json';
-    var results = []
     var db = new loki(db_path, options)
     db.loadDatabase({}, function(){
-        players = db.getCollection('players');
-        logger.log('players ' + JSON.stringify(players.data))
-        res.status(200).json(results)
+        var data = db.getCollection('players').data
+        res.status(200).json(data)
     })
 });
 
