@@ -59,22 +59,24 @@ export default class Game extends Component {
     }
     render() {
         const { className, ...props } = this.props;
+        var form
         if (this.state.gameName == null){
-            return (
-				<div className={classnames('Game', className)} {...props}>
-					<form onSubmit={this.handleGameLoad}>
-						<label>
-							<input type="text" onChange={this.handleGameName} />
-				        </label>
-				    <input type="submit" value="Submit" />
-				    </form>
-				</div>
+            form = (
+                <form onSubmit={this.handleGameLoad}>
+                    <label>
+                        <input type="text" onChange={this.handleGameName} />
+                </label>
+                <input type="submit" value="Submit" />
+                </form>
             )
         }
         return (
             <div className={classnames('Game', className)} {...props}>
-                <Players gameName={this.state.gameName} players={this.state.players}
-                    setAlert={this.props.setAlert} loadPlayers={this.loadPlayers}/>
+                <div className={classnames('row','text-center')}>
+                    {form}
+                </div>
+            <Players gameName={this.state.gameName} players={this.state.players}
+                setAlert={this.props.setAlert} loadPlayers={this.loadPlayers} />
             </div>
         );
     }
