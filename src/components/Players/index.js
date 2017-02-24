@@ -1,0 +1,65 @@
+import React, { PropTypes, Component } from 'react';
+import './style.css'
+import classnames from 'classnames';
+
+export default class Players extends Component {
+    //Props: setAlert gameName players getPlayers
+    constructor(props){
+        super(props)
+        this.state = {
+            editMode: false
+        }
+        this.handleEditPlayers = this.handleEditPlayers.bind(this)
+        this.handleAddSubmit   = this.handleAddSubmit.bind(this)
+        this.handleAddChange   = this.handleAddChange.bind(this)
+    }
+    handleEditPlayers(event){
+        event.preventDefault();
+        console.log("edit mode: " + this.state.editMode)
+        this.setState({editMode: !this.state.editMode})
+    }
+    handleAddChange(event){
+        this.setState({editedUser: event.target.value})
+    }
+    handleAddSubmit(event){
+        event.preventDefault();
+        console.log("will call some api for: " + this.state.editedUser)
+    }
+    render(){
+        const { className, ...props } = this.props;
+        var editElem
+        if (this.props.players.length == 0){
+            editElem = (
+                <form onSubmit={this.handleAddSubmit}>
+                    <label>
+                        <input type="text" onChange={this.handleAddChange} />
+                </label>
+                <button type="submit">
+                    <i className={classnames("fa", "fa-user-plus")} aria-hidden="true"></i>
+                </button>
+                </form>
+            )
+        } else {
+            editElem = (
+                <button onClick={this.handleEditPlayers}>
+                    <i className={classnames("fa", "fa-users")} aria-hidden="true"></i>
+                </button>
+            )
+        }
+        if(!this.props.gameName){ editElem=null }
+        return(
+            <div>
+                <div className={classnames('row','text-center','Players', className)} {...props}>
+                    {
+                        this.props.players.map(function(p){
+                            return <div className={classnames('col')}>{p.name}</div>
+                        })
+                    }
+                </div>
+            <div className={classnames('row','centered', className)} {...props}>
+                <div className={classnames('centered')}>{editElem}</div>
+            </div>
+            </div>
+        )
+    }
+}
