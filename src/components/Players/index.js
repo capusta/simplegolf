@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import './style.css'
 import classnames from 'classnames';
+import Person from '../Person'
 
 export default class Players extends Component {
     //Props: setAlert gameName players getPlayers
@@ -47,18 +48,22 @@ export default class Players extends Component {
             )
         }
         if(!this.props.gameName){ editElem=null }
+        var players = [];
+        var that = this
+        this.props.players.map(function(p){
+            players.push(<div className={classnames('col')}>
+                <Person name={p.name} editMode={that.state.editMode}/>
+                </div>)
+        })
         return(
             <div>
                 <div className={classnames('row','text-center','Players', className)} {...props}>
-                    {
-                        this.props.players.map(function(p){
-                            return <div className={classnames('col')}>{p.name}</div>
-                        })
-                    }
+                    {players}
                 </div>
-            <div className={classnames('row','centered', className)} {...props}>
-                <div className={classnames('centered')}>{editElem}</div>
-            </div>
+                <div className={classnames('row','centered', className)} {...props}>
+                    <div className={classnames('centered')}>{editElem}
+                    </div>
+                </div>
             </div>
         )
     }
