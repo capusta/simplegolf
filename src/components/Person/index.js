@@ -22,8 +22,27 @@ export default class Person extends Component {
     }
     handleNameUpdate(e){
         e.preventDefault();
-        console.log("Updating name via api: " + this.state.name)
-        this.setState({editMode: false})
+        var payload = {oldname: this.props.name, newname: this.state.name},
+            that    = this,
+            data = {}
+
+        console.log("adding " + this.state.name + " 99 " + JSON.stringify(payload))
+        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+this.props.gameName,
+            {
+                method: "put",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res){
+                console.log("got reply for adding player")
+                return res.json();
+            })
+            .then(function(data){
+                that.setState({editMode: false, name: data.name})
+                console.log(JSON.stringify(data))
+            });
     }
     render(){
         if (this.state.editMode) {
@@ -43,7 +62,6 @@ export default class Person extends Component {
             var nameBox = <a href="#" onClick={this.goEditMode}>{this.state.name}{okIcon}</a>
         }
         const { className, ...props } = this.props;
-        console.log(JSON.stringify(this.props))
         return (
         <div>
             {nameBox}

@@ -4,10 +4,12 @@ const express = require('express')
     , React = require('react')
     , path = require('path')
     , logger = require('./lib/logger')
+    , bodyParser = require('body-parser')
 
 var port    = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip      = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 
+app.use(bodyParser.json());
 // Express Router Stuff - mostly JSON calls
 app.use('/api',require('./routes/api'));
 

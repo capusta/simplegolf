@@ -52,7 +52,7 @@ export default class Players extends Component {
         var that = this
         this.props.players.map(function(p){
             players.push(<div className={classnames('col')}>
-                <Person name={p.name}/>
+                <Person name={p.name} gameName={that.props.gameName}/>
                 </div>)
         })
         return(
