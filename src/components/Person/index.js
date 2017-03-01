@@ -59,7 +59,7 @@ export default class Person extends Component {
             )
         } else {
             var okIcon  = null
-            var nameBox = <a href="#" onClick={this.goEditMode}>{this.state.name}{okIcon}</a>
+            var nameBox = <a href="#" onClick={this.goEditMode}>{this.state.name}</a>
         }
         const { className, ...props } = this.props;
         return (

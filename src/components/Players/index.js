@@ -57,12 +57,12 @@ export default class Players extends Component {
         })
         return(
             <div>
-                <div className={classnames('row','text-center','Players', className)} {...props}>
-                    {players}
-                </div>
                 <div className={classnames('row','centered', className)} {...props}>
                     <div className={classnames('centered')}>{editElem}
                     </div>
+                </div>
+                <div className={classnames('row','text-center','Players', className)} {...props}>
+                    {players}
                 </div>
             </div>
         )
