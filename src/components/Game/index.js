@@ -14,7 +14,6 @@ export default class Game extends Component {
         }
         this.handleGameLoad = this.handleGameLoad.bind(this);
         this.handleGameName = this.handleGameName.bind(this);
-        //this.getPlayers = this.getPlayers.bind(this);
     }
     handleGameName(event){
         this.setState({userGameInput: event.target.value})
@@ -76,7 +75,7 @@ export default class Game extends Component {
                     {form}
                 </div>
             <Players gameName={this.state.gameName} players={this.state.players}
-                setAlert={this.props.setAlert} loadPlayers={this.loadPlayers} />
+                setAlert={this.props.setAlert} />
             </div>
         );
     }

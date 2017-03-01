@@ -23,10 +23,7 @@ export default class Person extends Component {
     handleNameUpdate(e){
         e.preventDefault();
         var payload = {oldname: this.props.name, newname: this.state.name},
-            that    = this,
-            data = {}
-
-        console.log("adding " + this.state.name + " 99 " + JSON.stringify(payload))
+            that    = this
         fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+this.props.gameName,
             {
                 method: "put",
