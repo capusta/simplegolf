@@ -9,11 +9,29 @@ export default class Players extends Component {
         super(props)
         this.state = {
             editMode: false,
-            players: this.props.players,
+            players: []
         }
         this.handleEditPlayers = this.handleEditPlayers.bind(this)
         this.handleAddSubmit   = this.handleAddSubmit.bind(this)
         this.handleAddChange   = this.handleAddChange.bind(this)
+    }
+    componentDidUpdate(prevProps, prevState){
+        if (prevProps.gameName == null && this.props.gameName != null){
+            //we are loading for the first time
+            this.loadPlayers(this.props.gameName)
+        }
+    }
+    // Performs initial loading of the players in the game
+    loadPlayers(gameID){
+        var that = this;
+        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+gameID)
+            .then(function(res){
+                return res.json();
+            })
+            .then(function(data){
+                console.log('Players fetching players: ' + JSON.stringify(data))
+                that.setState({players: data})
+            })
     }
     handleEditPlayers(event){
         event.preventDefault();
@@ -42,17 +60,20 @@ export default class Players extends Component {
             })
             .then(function(data){
                 console.log("reply body: " + JSON.stringify(data))
+                if (!data.success){
+                    that.props.setAlert(data.msg)
+                    return
+                }
                 that.props.setAlert("Player added")
-                var newPlayers = that.state.players;
-                newPlayers.push({name: data.name})
-                that.setState({players: newPlayers})
+                var p = that.state.players
+                p.push({name: data.name, score: 0})
+                that.setState({players: p, editMode: false})
             })
     }
     render(){
         const { className, ...props } = this.props;
-        console.log("players state: " + this.state.players)
         var editElem
-        if (this.state.players.length == 0){
+        if (this.state.players.length == 0 || this.state.editMode){
             editElem = (
                 <form onSubmit={this.handleAddSubmit}>
                     <label>
@@ -75,7 +96,7 @@ export default class Players extends Component {
         var that = this
         this.state.players.map(function(p){
             players.push(<div className={classnames('col')}>
-                <Person name={p.name} gameName={that.props.gameName}/>
+                <Person name={p.name} gameName={that.props.gameName} setAlert={that.props.setAlert}/>
                 </div>)
         })
         return(

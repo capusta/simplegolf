@@ -37,6 +37,10 @@ export default class Person extends Component {
                 return res.json();
             })
             .then(function(data){
+                if (!data.success){
+                    that.props.setAlert(data.msg)
+                    return
+                }
                 that.setState({editMode: false, name: data.name})
                 console.log(JSON.stringify(data))
             });

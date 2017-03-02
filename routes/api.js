@@ -32,7 +32,13 @@ routes.put('/players/:gameid', (req,res) => {
     db.loadDatabase({}, function(){
         var players   = db.getCollection('players');
         var oldPlayer = players.findOne({'name': oldname})
-        console.log("found old player" + JSON.stringify(oldPlayer))
+        var newPlayer = players.findOne({'name': newname})
+        if (newPlayer){
+            console.log("Player exists")
+            res.status(400).json({success: false, name: oldname,
+            msg: 'Player already exists'})
+            return
+        }
         if (oldPlayer) {
             oldPlayer.name = newname;
             players.update(oldPlayer)

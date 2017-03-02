@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 import Players from '../Players'
+import './style.css'
 
 export default class Game extends Component {
     //Props: gameName, setAlert
@@ -41,19 +42,8 @@ export default class Game extends Component {
                     // Update local state
                     that.setState({gameName: data.gameName});
                     // Grab initial player data
-                    that.loadPlayers(data.gameName)
+                    //that.loadPlayers(data.gameName)
                 }
-            })
-    }
-    loadPlayers(gameID){
-        var that = this;
-        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+gameID)
-            .then(function(res){
-                return res.json();
-            })
-            .then(function(data){
-                console.log('fetching players: ' + JSON.stringify(data))
-                that.setState({players: data})
             })
     }
     render() {
@@ -71,11 +61,10 @@ export default class Game extends Component {
         }
         return (
             <div className={classnames('Game', className)} {...props}>
-                <div className={classnames('row','text-center')}>
+                <div className={classnames('row','block')}>
                     {form}
                 </div>
-            <Players gameName={this.state.gameName} players={this.state.players}
-                setAlert={this.props.setAlert} />
+            <Players gameName={this.state.gameName} setAlert={this.props.setAlert} />
             </div>
         );
     }
