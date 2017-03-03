@@ -9,7 +9,7 @@ export default class Public extends Component {
   render() {
       const { className, ...props } = this.props;
       let btnclass = classnames('btn','btn-info')
-      let centerRow = classnames('row','text-center')
+      let centerRow = classnames('row','text-center', 'center-align')
 
     return (
         <div className={centerRow}>

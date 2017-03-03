@@ -17,8 +17,21 @@ routes.get('/games/:gameid', (req, res) => {
         if (!players){
             db.addCollection('players')
             db.save()
+            res.status(200).json({
+                gamename: gameID,
+                players:  []
+            });
+            return
+        } else {
+            res.status(200).json({
+                gamename: gameID,
+                players:  players.data
+            })
+            return
         }
-        res.status(200).json({ gameName: gameID });
+        res.status(400).json({
+            error: true,
+            msg: "Unable to load or parse db" });
     })
 });
 
@@ -50,14 +63,5 @@ routes.put('/players/:gameid', (req,res) => {
     })
 })
 
-routes.get('/players/:gameid', (req, res) => {
-    var gameID = req.params.gameid
-    var db_path = DATA_DIR+'/'+gameID+'.json';
-    var db = new loki(db_path, options)
-    db.loadDatabase({}, function(){
-        var data = db.getCollection('players').data
-        res.status(200).json(data)
-    })
-});
 
 module.exports = routes;

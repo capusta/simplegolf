@@ -18,7 +18,7 @@ export default class Players extends Component {
     componentDidUpdate(prevProps, prevState){
         if (prevProps.gameName == null && this.props.gameName != null){
             //we are loading for the first time
-            this.loadPlayers(this.props.gameName)
+            //this.loadPlayers(this.props.gameName)
         }
     }
     // Performs initial loading of the players in the game
