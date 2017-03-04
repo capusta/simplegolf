@@ -56,7 +56,15 @@ routes.put('/players/:gameid', (req,res) => {
             oldPlayer.name = newname;
             players.update(oldPlayer)
         } else {
-            players.insert({name: newname, score: 0});
+            if (newname==null || newname=="") {
+                res.status(400).json({
+                    success:false,
+                    msg: "Name cannot be nulll"
+                })
+                return
+            } else {
+                players.insert({name: newname, score: 0});
+            }
         }
         db.save()
         res.status(200).json({success: true, name: newname, msg: 'inserted'})
