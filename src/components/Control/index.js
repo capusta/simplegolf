@@ -15,10 +15,10 @@ export default class Control extends Component {
         }
         this.HandleGameLoad    = this.HandleGameLoad.bind(this);
         this.HandleGameName    = this.HandleGameName.bind(this);
-        this.HandleAddPlayerChange = this.HandleAddPlayerChange.bind(this);
+        this.HandlePlayerChange = this.HandlePlayerChange.bind(this);
         this.HandleAddPlayerSubmit = this.HandleAddPlayerSubmit.bind(this);
     }
-    HandleAddPlayerChange(event){
+    HandlePlayerChange(event){
         event.preventDefault();
         this.setState({userinput: event.target.value})
     }
@@ -87,19 +87,13 @@ export default class Control extends Component {
         const { className, ...props } = this.props;
         var utility, utilityplayer, utilitygame = null;
         console.log(this.state.userinput)
-        // Handle all the selections
-        if (this.props.activeplayer != null){
-            utility = (
-                this.props.activeplayer
-            )
-        }
         // Add Players if there are none
         if (this.props.players.length == 0 && this.props.gamename != null){
             utilityplayer = (
                 <form onSubmit={this.HandleAddPlayerSubmit}>
                     <label>
                         <input type="text" value={this.state.userinput}
-                            onChange={this.HandleAddPlayerChange} />
+                            onChange={this.HandlePlayerChange} />
                 </label>
                 <button type="submit">
                     <i className={classnames("fa", "fa-user-plus")} aria-hidden="true"></i>
