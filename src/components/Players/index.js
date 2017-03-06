@@ -19,21 +19,25 @@ export default class Players extends Component {
     }
     SetActive(e){
         e.preventDefault();
-        console.log("Person: active:" + e.target.getAttribute('data-value'));
-        this.setState({activeplayer: e.target.getAttribute('data-value')});
-        this.props.SetActivePlayer(e.target.getAttribute('data-value'))
+        var n = e.target.getAttribute('data-value')
+        console.log("Person: active:" + n);
+        this.setState({activeplayer: n});
+        this.props.SetActivePlayer(n);
+        this.props.SetAlert(n);
     }
     render(){
+        console.log("rendering players")
         const { className, ...props } = this.props;
         var players = [];
+        var divcolor;
         var that = this
         this.props.players.map(function(p){
             if (p.name == that.state.activeplayer){
-                var divcolor = 'background-color: white;'
+                var divcolor = { 'background-color': 'lightgray' }
             } else {
-                var divcolor = 'background-color: gray;'
+                var divcolor = { 'background-color': 'white' }
             }
-            players.push(<div className={classnames('col', p.name)} style={divcolor}>
+            players.push(<div className={classnames('col', p.name)} onClick={that.SetActive} data-value={p.name} style={divcolor}>
                 <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
                 </div>)
         })

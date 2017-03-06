@@ -86,7 +86,7 @@ export default class Control extends Component {
     render() {
         const { className, ...props } = this.props;
         var utility, utilityplayer, utilitygame = null;
-        console.log(this.state.userinput)
+        console.log("control render: userinput: " + this.state.userinput)
         // Add Players if there are none
         if (this.props.players.length == 0 && this.props.gamename != null){
             utilityplayer = (
@@ -116,7 +116,6 @@ export default class Control extends Component {
         return (
             <div className={classnames('Control', className)} {...props}>
                 <div className={classnames('row','block')}>
-                    {utility}
                     {utilityplayer}
                     {utilitygame}
                 </div>
