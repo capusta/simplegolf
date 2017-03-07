@@ -10,13 +10,16 @@ export default class Control extends Component {
     constructor(props){
         super(props)
         this.state = {
-            activeplayer: null,
             userinput: null,
+            editmode:  false,
         }
         this.HandleGameLoad    = this.HandleGameLoad.bind(this);
+        this.HandleEditMode      = this.HandleEditMode.bind(this);
         this.HandleGameName    = this.HandleGameName.bind(this);
         this.HandlePlayerChange = this.HandlePlayerChange.bind(this);
         this.HandleAddPlayerSubmit = this.HandleAddPlayerSubmit.bind(this);
+        this.HandlePlayerUpdate    = this.HandlePlayerUpdate.bind(this);
+        this.HandleEditModeCancel  = this.HandleEditModeCancel.bind(this);
     }
     HandlePlayerChange(event){
         event.preventDefault();
@@ -25,6 +28,20 @@ export default class Control extends Component {
     HandleGameName(event){
         event.preventDefault();
         this.setState({userinput: event.target.value})
+    }
+    HandleEditMode(){
+        var m = this.state.editmode;
+        if (!m) {
+            this.props.SetAlert('Edit player')
+        }
+        this.setState({editmode: !m, userinput: this.props.activeplayer})
+    }
+    HandleEditModeCancel(){
+        this.setState({editmode: false})
+    }
+    HandlePlayerUpdate(){
+        console.log("Control changing " + this.props.activeplayer + " to " + this.state.userinput)
+        this.setState({editmode: !this.state.editmode})
     }
     HandleAddPlayerSubmit(event){
         event.preventDefault();
@@ -85,25 +102,43 @@ export default class Control extends Component {
     }
     render() {
         const { className, ...props } = this.props;
-        var utility, utilityplayer, utilitygame = null;
-        console.log("control render: userinput: " + this.state.userinput)
+        var utility_player_edit, utility_player_add, utility_game = null;
         // Add Players if there are none
         if (this.props.players.length == 0 && this.props.gamename != null){
-            utilityplayer = (
+            utility_player_add = (
                 <form onSubmit={this.HandleAddPlayerSubmit}>
                     <label>
                         <input type="text" value={this.state.userinput}
                             onChange={this.HandlePlayerChange} />
                 </label>
                 <button type="submit">
-                    <i className={classnames("fa", "fa-user-plus")} aria-hidden="true"></i>
+                    <i className={classnames("fa", "fa-user-plus", "fa-2x")} aria-hidden="true"></i>
                 </button>
                 </form>
             )
         }
+        if (this.props.activeplayer != null){
+            if (this.state.editmode){
+                utility_player_edit =  (
+                    <div>
+                        <input type="text" value={this.state.userinput}
+                            onChange={this.HandlePlayerChange} />
+                        <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
+                            onClick={this.HandlePlayerUpdate}>  </i>
+                    <i className={classnames("fa","fa-times","fa-2x")} aria-hidden="true"
+                        onClick={this.HandleEditModeCancel}> </i>
+                    </div>
+                )} else {
+                    utility_player_edit = (
+                        <div>{this.props.activeplayer}
+                            <i className={classnames("fa","fa-pencil-square-o","fa-2x")} aria-hidden="true"
+                                onClick={this.HandleEditMode}>  </i>
+                        </div>
+                    )}
+        }
         // Need to find a game name first
         if (this.props.gamename == null){
-            utilitygame = (
+            utility_game = (
                 <form onSubmit={this.HandleGameLoad}>
                     <label>
                         <input type="text" value={this.state.userinput}
@@ -116,8 +151,9 @@ export default class Control extends Component {
         return (
             <div className={classnames('Control', className)} {...props}>
                 <div className={classnames('row','block')}>
-                    {utilityplayer}
-                    {utilitygame}
+                    {utility_player_add}
+                    {utility_game}
+                    {utility_player_edit}
                 </div>
             </div>
         );

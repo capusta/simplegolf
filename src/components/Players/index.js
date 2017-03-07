@@ -23,7 +23,6 @@ export default class Players extends Component {
         console.log("Person: active:" + n);
         this.setState({activeplayer: n});
         this.props.SetActivePlayer(n);
-        this.props.SetAlert(n);
     }
     render(){
         console.log("rendering players")
