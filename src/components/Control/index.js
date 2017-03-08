@@ -39,9 +39,32 @@ export default class Control extends Component {
     HandleEditModeCancel(){
         this.setState({editmode: false})
     }
-    HandlePlayerUpdate(){
+    HandlePlayerUpdate(e){
+        e.preventDefault();
+        var payload = {oldname: this.props.activeplayer, newname: this.state.userinput},
+            that = this
         console.log("Control changing " + this.props.activeplayer + " to " + this.state.userinput)
-        this.setState({editmode: !this.state.editmode})
+        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+this.props.gamename,
+            {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res){
+                return res.json();
+            })
+            .then(function(data){
+                if (!data.success){
+                    that.props.SetAlert(data.msg)
+                    return
+                }
+                that.setState({editmode: false})
+                that.props.SetPlayers((data.players))
+                that.props.SetActivePlayer(data.newname)
+            })
+
     }
     HandleAddPlayerSubmit(event){
         event.preventDefault();
@@ -49,7 +72,7 @@ export default class Control extends Component {
         var payload = {oldname: null, newname: this.state.userinput},
             that = this
         console.log("Control adding palyer " + JSON.stringify(payload))
-        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+that.props.gamename,
+        fetch(process.env.REACT_APP_BASE_URL+'/api/players/'+this.props.gamename,
             {
                 method: 'put',
                 headers: {

@@ -67,7 +67,8 @@ routes.put('/players/:gameid', (req,res) => {
             }
         }
         db.save()
-        res.status(200).json({success: true, name: newname, msg: 'inserted'})
+        res.status(200).json({success: true, name: newname, msg: 'inserted',
+            players: players.data})
     })
 })
 
