@@ -12,11 +12,6 @@ export default class Players extends Component {
         }
         this.SetActive = this.SetActive.bind(this);
     }
-    componentDidUpdate(prevProps, prevState){
-        if (prevProps.gameName == null && this.props.gameName != null){
-            //not sure if we need this anymore
-        }
-    }
     SetActive(e){
         e.preventDefault();
         var n = e.target.getAttribute('data-value')
@@ -25,7 +20,6 @@ export default class Players extends Component {
         this.props.SetActivePlayer(n);
     }
     render(){
-        console.log("rendering players")
         const { className, ...props } = this.props;
         var players = [];
         var divcolor;
@@ -36,15 +30,15 @@ export default class Players extends Component {
             } else {
                 var divcolor = { 'background-color': 'white' }
             }
-            players.push(<div className={classnames('col', p.name)} onClick={that.SetActive} data-value={p.name} style={divcolor}>
-                <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
+            players.push(
+                <div className={classnames('row','text-center','player',p.name, className)}
+                    {...props} onClick={that.SetActive} data-value={p.name} style={divcolor} >
+                    <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
                 </div>)
         })
         return(
             <div>
-                <div className={classnames('row','text-center','Players', className)} {...props}>
-                    {players}
-                </div>
+                {players}
             </div>
         )
     }

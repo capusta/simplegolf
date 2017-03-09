@@ -12,6 +12,7 @@ routes.get('/games/:gameid', (req, res) => {
     var gameID = req.params.gameid
     var db_path = DATA_DIR+'/'+gameID+'.json';
     var db = new loki(db_path, options)
+    console.log("Routes Loading game " + gameID)
     db.loadDatabase({}, function(){
         players = db.getCollection('players')
         console.log("loaded game " + gameID)
@@ -67,8 +68,7 @@ routes.put('/players/:gameid', (req,res) => {
             }
         }
         db.save()
-        res.status(200).json({success: true, name: newname, msg: 'inserted',
-            players: players.data})
+        res.status(200).json({success: true, name: newname, msg: 'inserted'})
     })
 })
 
