@@ -6,7 +6,7 @@ const DATA_DIR = process.env.OPENSHIFT_DATA_DIR
 var fs   = require('fs'),
     loki = require('lokijs'),
     options = { autosave: true, autoload: true,
-        autosaveInterval: 1000}
+        autosaveInterval: 100, throttledSaves: false }
 
 routes.get('/games/:gameid', (req, res) => {
     var gameID = req.params.gameid
@@ -14,9 +14,9 @@ routes.get('/games/:gameid', (req, res) => {
     var db = new loki(db_path, options)
     db.loadDatabase({}, function(){
         players = db.getCollection('players')
+        console.log("loaded game " + gameID)
         if (!players){
             db.addCollection('players')
-            db.save()
             res.status(200).json({
                 gamename: gameID,
                 players:  []
