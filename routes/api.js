@@ -64,7 +64,7 @@ routes.put('/players/:gameid', (req,res) => {
                 })
                 return
             } else {
-                players.insert({name: newname, score: 0});
+                players.insert({name: newname, score: 0, course: []});
             }
         }
         db.save()

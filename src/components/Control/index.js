@@ -18,6 +18,11 @@ export default class Control extends Component {
         this.HandlePlayerUpdate   = this.HandlePlayerUpdate.bind(this);
         this.HandleEditModeOff    = this.HandleEditModeOff.bind(this);
     }
+ componentWillUpdate(nextProps, nextState){
+        if (this.props.activeplayer != nextProps.activeplayer){
+            this.HandleEditModeOff();
+        }
+    }
     HandleEditModeOff(){
         this.setState({editmode: false, userinput: null})
     }
@@ -29,7 +34,7 @@ export default class Control extends Component {
     HandlePlayerChange(event){
             event.preventDefault();
             this.setState({userinput: event.target.value})
-        }
+     }
     HandlePlayerUpdate(e){
         e.preventDefault();
         var payload = {oldname: this.props.activeplayer, newname: this.state.userinput},
@@ -57,7 +62,6 @@ export default class Control extends Component {
     }
     render() {
         const { className, ...props } = this.props;
-        console.log("Control edit mode " + this.state.editmode)
         var utility = null
         if (this.state.editmode){
             utility = (

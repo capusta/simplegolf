@@ -57,8 +57,8 @@ class App extends Component {
         })
     }
     HandleGameLoad(event){
-        var that = this;
         event.preventDefault();
+        var that = this;
         this.SetAlert("App Loading game " +  this.state.userinput)
         fetch(process.env.REACT_APP_BASE_URL+'/api/games/'+this.state.userinput)
             .then(function(res){
@@ -76,7 +76,6 @@ class App extends Component {
                     // Update alert banner
                     that.SetAlert("game loaded")
                     that.SetGameName(data.gamename);
-                    that.SetPlayers(data.players);
                 }
             })
     }
@@ -94,12 +93,11 @@ class App extends Component {
         } else {
             var header = 'golfiness'
             var gameload = (
-                <form onSubmit={this.HandleGameLoad}>
-                <label>
-                    <input type="text" value={this.state.userinput} onChange={this.UpdateGameName} />
-                </label>
-                <input type="submit" value="Submit" />
-                </form>
+                <div>
+                <input type="text" value={this.state.userinput} onChange={this.UpdateGameName} />
+                <span className={classnames("fa","fa-chevron-circle-right","fa-2x",)}
+                    onClick={this.HandleGameLoad} />
+                </div>
                 )
              var control = null
         }
