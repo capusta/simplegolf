@@ -58,10 +58,10 @@ export default class Control extends Component {
     render() {
         const { className, ...props } = this.props;
         console.log("Control edit mode " + this.state.editmode)
-        var utility_player_edit, utility_player_add = null;
+        var utility_player_edit = null;
         // Add Players if there are none
         if (this.props.players.length == 0){
-            utility_player_add = (
+                utility_player_edit =  (
                 <form onSubmit={this.HandlePlayerUpdate}>
                     <label>
                         <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
@@ -93,7 +93,6 @@ export default class Control extends Component {
         return (
             <div className={classnames('Control', className)} {...props}>
                 <div className={classnames('row','block')}>
-                    {utility_player_add}
                     {utility_player_edit}
                 </div>
 
