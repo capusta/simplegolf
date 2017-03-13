@@ -70,37 +70,21 @@ export default class Control extends Component {
     }
     render() {
         const { className, ...props } = this.props;
-        var utility = null
-        var course = (<Course gamename={this.state.gamename} SetCurrentHole={this.SetActiveHole} />)
-
-        if (this.state.editmode){
-            utility = (
-                <div className={classnames("Control")} >
-                    <input type="text" onChange={this.HandlePlayerChange} />
-                    <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
-                        onClick={this.HandlePlayerUpdate}/>
-                    <i className={classnames("fa","fa-times","fa-2x")} aria-hidden="true"
-                        onClick={this.HandleEditModeOff}/>
-                    {course}
-                </div>
-            )
-            course = null
-        }else {
-            utility = (
-                <div className={classnames("Control")} >
+        var course = ( <Course gamename={this.state.gamename} SetCurrentHole={this.SetActiveHole} /> )
+        var utility = (
+            <div className={classnames("Control")} >
                 <i className={classnames("fa","fa-user-plus","fa-2x")} aria-hidden="true"
                     onClick={this.HandleEditModeOn} />
-                {course}
-                </div>
-                )
-        }
+            </div>
+        )
+
         // Add Players if there are none
-        if (this.props.players.length == 0){
-                utility =  (
+        if (this.props.players.length == 0 || this.state.editmode){
+            utility =  (
                 <div className={classnames("Control")} >
-                <form onSubmit={this.HandlePlayerUpdate}>
-                    <label>
-                        <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
+                    <form onSubmit={this.HandlePlayerUpdate}>
+                        <label>
+                            <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
                 </label>
                 <button type="submit">
                     <i className={classnames("fa", "fa-user-plus", "fa-2x")} aria-hidden="true"></i>
@@ -108,15 +92,14 @@ export default class Control extends Component {
                 </form>
                 </div>
             )
-                course = null
         }
-        if (this.props.activeplayer != null){
+        if (this.props.activeplayer){
             if (this.state.editmode){
                 utility =  (
                     <div className={classnames("Control")} >
                         <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
-                        <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
-                            onClick={this.HandlePlayerUpdate}/>
+                    <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
+                        onClick={this.HandlePlayerUpdate}/>
                     <i className={classnames("fa","fa-times","fa-2x")} aria-hidden="true"
                         onClick={this.HandleEditModeOff}> </i>
                     </div>

@@ -18,7 +18,6 @@ export default class Course extends Component {
     }
     render(){
         const { className, ...props } = this.props;
-        console.log("Rendering course")
         var that = this
         var course = []
         var ci = null
@@ -26,11 +25,11 @@ export default class Course extends Component {
         for (var i = 0;i<=17;i++){
             if (that.state.activehole && that.state.activehole == i){
                 course.push(
-                    <div className={classnames('col')}> <b>{i}</b> </div>
+                    <div className={classnames('col')}> <b>{i++}</b> </div>
                     )
             } else {
                 course.push(
-                    <div className={classnames('col')}>{i}</div>
+                    <div className={classnames('col')}>{i++}</div>
                     )
             }
         }
