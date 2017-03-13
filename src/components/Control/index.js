@@ -31,6 +31,7 @@ export default class Control extends Component {
         e.preventDefault();
         var n = e.target.getAttribute('data-value')
         this.setState({activehole: n})
+        this.props.SetAlert("Hole " + n)
         console.log("active hole is " + n)
         //TODO: fetch player scores for hole i
     }
@@ -74,7 +75,7 @@ export default class Control extends Component {
     render() {
         const { className, ...props } = this.props;
         var course = ( <Course gamename={this.state.gamename} activehole={this.state.activehole}
-            SetActiveHole={this.SetActiveHole} /> )
+            SetActiveHole={this.SetActiveHole}/> )
         var utility = (
             <div className={classnames("Control")} >
                 <i className={classnames("fa","fa-user-plus","fa-2x")} aria-hidden="true"
@@ -123,7 +124,8 @@ export default class Control extends Component {
                     {course}
                 </div>
             <Players gamename={this.props.gamename} SetAlert={this.props.SetAlert}
-                players={this.props.players} SetActivePlayer={this.props.SetActivePlayer} />
+                players={this.props.players} SetActivePlayer={this.props.SetActivePlayer}
+                activehole={this.state.activehole}/>
             </div>
         );
     }

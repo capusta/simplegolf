@@ -3,7 +3,7 @@ import './style.css'
 import classnames from 'classnames';
 
 export default class Players extends Component {
-    //Props: SetAlert gamename players SetActivePlayer
+    //Props: SetAlert gamename players SetActivePlayer activehole
     constructor(props){
         super(props)
         this.state = {
@@ -12,6 +12,7 @@ export default class Players extends Component {
         }
         this.SetActive = this.SetActive.bind(this);
     }
+    //TODO: Detect hole change and update accordingly
     SetActive(e){
         e.preventDefault();
         var n = e.target.getAttribute('data-value')
@@ -21,21 +22,31 @@ export default class Players extends Component {
     }
     render(){
         const { className, ...props } = this.props;
-        console.log("App Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
-
+        //console.log("Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
+        console.log("Players: " +  this.state.activeplayer + "//" + this.props.activehole   )
         var players = [];
-        var divcolor;
+        var divcolor, cmp = null;
         var that = this
         this.props.players.map(function(p){
             if (p.name == that.state.activeplayer){
-                var divcolor = { 'background-color': 'lightgray' }
+                divcolor = { 'background-color': 'lightgray' }
             } else {
-                var divcolor = { 'background-color': 'white' }
+                divcolor = { 'background-color': 'white' }
+            }
+            if (that.props.activehole == null) {
+                cmp = 'score here'
+            } else {
+                cmp = parseInt(that.props.activehole, 10)
             }
             players.push(
-                <div className={classnames('row','text-center','player',p.name, className)}
-                    {...props} onClick={that.SetActive} data-value={p.name} style={divcolor} >
-                    <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
+                <div className={classnames('row','text-center','player','pt-3', className)}
+                    {...props} onClick={that.SetActive} data-value={p.name} style={divcolor}>
+                    <div className={classnames('col','player_name')} onClick={that.SetActive} data-value={p.name}>
+                        <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
+                </div>
+                <div className={classnames('col','player_holescore')}>
+                    -- {cmp} --
+                </div>
                 </div>)
         })
         return(

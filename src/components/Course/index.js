@@ -12,20 +12,21 @@ export default class Course extends Component {
         var course = []
         var ci = null
         //TODO: separate into two rows ... maybe it will look nice
-        for (var i = 0;i<=17;i++){
+        for (var i = 1;i<=18;i++){
+            var divcolor = null
+            var h = i
             if (that.props.activehole && that.props.activehole == i){
-                course.push(
-                    <div className={classnames('col')} data-value={i} onClick={this.props.SetActiveHole}>
-                        <b>{i+1}</b>
-                    </div>
-                    )
+                 divcolor = { 'background-color': 'lightgray'}
+                 h = (<b>{i}</b>)
             } else {
-                course.push(
-                    <div className={classnames('col')} data-value={i} onClick={this.props.SetActiveHole}>
-                        {i+1}
-                    </div>
-                    )
+                 divcolor = { 'background-color': 'white'}
             }
+            course.push(
+                <div className={classnames('col','course-general')} data-value={i}
+                    onClick={this.props.SetActiveHole} style={divcolor}>
+                    {h}
+                </div>
+            )
         }
         return(
             <div className={classnames('row','text-center','course')}>
