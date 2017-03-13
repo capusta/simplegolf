@@ -19,6 +19,7 @@ export default class Control extends Component {
         this.HandlePlayerChange   = this.HandlePlayerChange.bind(this);
         this.HandlePlayerUpdate   = this.HandlePlayerUpdate.bind(this);
         this.HandleEditModeOff    = this.HandleEditModeOff.bind(this);
+        this.SetActiveHole        = this.SetActiveHole.bind(this);
     }
 
     componentWillUpdate(nextProps, nextState){
@@ -26,9 +27,11 @@ export default class Control extends Component {
             this.HandleEditModeOff();
         }
     }
-    SetActiveHole(i){
-        this.setState({activehole: i})
-        console.log("active hole is " + i)
+    SetActiveHole(e){
+        e.preventDefault();
+        var n = e.target.getAttribute('data-value')
+        this.setState({activehole: n})
+        console.log("active hole is " + n)
         //TODO: fetch player scores for hole i
     }
     HandleEditModeOff(){
@@ -70,7 +73,8 @@ export default class Control extends Component {
     }
     render() {
         const { className, ...props } = this.props;
-        var course = ( <Course gamename={this.state.gamename} SetCurrentHole={this.SetActiveHole} /> )
+        var course = ( <Course gamename={this.state.gamename} activehole={this.state.activehole}
+            SetActiveHole={this.SetActiveHole} /> )
         var utility = (
             <div className={classnames("Control")} >
                 <i className={classnames("fa","fa-user-plus","fa-2x")} aria-hidden="true"

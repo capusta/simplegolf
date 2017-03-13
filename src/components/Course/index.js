@@ -2,19 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 
 export default class Course extends Component {
-    //Props: SetCurrentHole gamename
+    //Props: SetActiveHole gamename
     constructor(props){
         super(props)
-        this.state = {
-            activehole: null,
-        }
-        this.SetActive = this.SetActive.bind(this);
-    }
-    SetActive(e){
-        e.preventDefault();
-        var n = e.target.getAttribute('data-value')
-        this.setState({activehole: n});
-        this.props.SetCurrentHole(n);
     }
     render(){
         const { className, ...props } = this.props;
@@ -23,13 +13,17 @@ export default class Course extends Component {
         var ci = null
         //TODO: separate into two rows ... maybe it will look nice
         for (var i = 0;i<=17;i++){
-            if (that.state.activehole && that.state.activehole == i){
+            if (that.props.activehole && that.props.activehole == i){
                 course.push(
-                    <div className={classnames('col')}> <b>{i++}</b> </div>
+                    <div className={classnames('col')} data-value={i} onClick={this.props.SetActiveHole}>
+                        <b>{i+1}</b>
+                    </div>
                     )
             } else {
                 course.push(
-                    <div className={classnames('col')}>{i++}</div>
+                    <div className={classnames('col')} data-value={i} onClick={this.props.SetActiveHole}>
+                        {i+1}
+                    </div>
                     )
             }
         }
