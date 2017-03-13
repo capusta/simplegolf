@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import Control from '../Control'
 import Players from '../Players'
+import Course from '../Course'
 import './style.css';
 
 
@@ -86,9 +87,11 @@ class App extends Component {
             var header   = this.state.gamename
             var gameload = null
             var control = (
+            <div>
             <Control gamename={this.state.gamename} SetAlert={this.SetAlert}
                 activeplayer={this.state.activeplayer} players={this.state.players}
                 SetActivePlayer={this.SetActivePlayer} ReloadPlayers={this.ReloadPlayers} />
+            </div>
             )
         } else {
             var header = 'golfiness'
@@ -97,11 +100,11 @@ class App extends Component {
                 <input type="text" value={this.state.userinput} onChange={this.UpdateGameName} />
                 <span className={classnames("fa","fa-chevron-circle-right","fa-2x",)}
                     onClick={this.HandleGameLoad} />
+                 <p>Please Enter Game Name</p>
                 </div>
                 )
              var control = null
         }
-        console.log("App Players length, gamename " + this.state.players.length + " --- " + this.state.gamename)
         return (
             <div className={classnames('App',className)} {...props}>
                 <div className="App-header">

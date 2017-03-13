@@ -21,6 +21,8 @@ export default class Players extends Component {
     }
     render(){
         const { className, ...props } = this.props;
+        console.log("App Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
+
         var players = [];
         var divcolor;
         var that = this

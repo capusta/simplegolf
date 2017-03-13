@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 import Players from '../Players'
+import Course from '../Course'
 import './style.css'
 
 export default class Control extends Component {
@@ -12,16 +13,23 @@ export default class Control extends Component {
         this.state = {
             userinput: null,
             editmode:  false,
+            activehole: null,
         }
         this.HandleEditModeOn     = this.HandleEditModeOn.bind(this);
         this.HandlePlayerChange   = this.HandlePlayerChange.bind(this);
         this.HandlePlayerUpdate   = this.HandlePlayerUpdate.bind(this);
         this.HandleEditModeOff    = this.HandleEditModeOff.bind(this);
     }
- componentWillUpdate(nextProps, nextState){
+
+    componentWillUpdate(nextProps, nextState){
         if (this.props.activeplayer != nextProps.activeplayer){
             this.HandleEditModeOff();
         }
+    }
+    SetActiveHole(i){
+        this.setState({activehole: i})
+        console.log("active hole is " + i)
+        //TODO: fetch player scores for hole i
     }
     HandleEditModeOff(){
         this.setState({editmode: false, userinput: null})
@@ -63,25 +71,33 @@ export default class Control extends Component {
     render() {
         const { className, ...props } = this.props;
         var utility = null
+        var course = (<Course gamename={this.state.gamename} SetCurrentHole={this.SetActiveHole} />)
+
         if (this.state.editmode){
             utility = (
-                <div>
+                <div className={classnames("Control")} >
                     <input type="text" onChange={this.HandlePlayerChange} />
                     <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
                         onClick={this.HandlePlayerUpdate}/>
                     <i className={classnames("fa","fa-times","fa-2x")} aria-hidden="true"
                         onClick={this.HandleEditModeOff}/>
+                    {course}
                 </div>
             )
+            course = null
         }else {
             utility = (
+                <div className={classnames("Control")} >
                 <i className={classnames("fa","fa-user-plus","fa-2x")} aria-hidden="true"
                     onClick={this.HandleEditModeOn} />
+                {course}
+                </div>
                 )
         }
         // Add Players if there are none
         if (this.props.players.length == 0){
                 utility =  (
+                <div className={classnames("Control")} >
                 <form onSubmit={this.HandlePlayerUpdate}>
                     <label>
                         <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
@@ -90,20 +106,23 @@ export default class Control extends Component {
                     <i className={classnames("fa", "fa-user-plus", "fa-2x")} aria-hidden="true"></i>
                 </button>
                 </form>
+                </div>
             )
+                course = null
         }
         if (this.props.activeplayer != null){
             if (this.state.editmode){
                 utility =  (
-                    <div>
+                    <div className={classnames("Control")} >
                         <input type="text" value={this.state.userinput} onChange={this.HandlePlayerChange} />
                         <i className={classnames("fa","fa-check-square-o","fa-2x")} aria-hidden="true"
                             onClick={this.HandlePlayerUpdate}/>
                     <i className={classnames("fa","fa-times","fa-2x")} aria-hidden="true"
                         onClick={this.HandleEditModeOff}> </i>
                     </div>
-                )} else {
-                    utility = (
+                )}
+                    else {
+                utility = (
                         <div>{this.props.activeplayer}
                             <i className={classnames("fa","fa-pencil-square-o","fa-2x")} aria-hidden="true"
                                 onClick={this.HandleEditModeOn}>  </i>
@@ -114,8 +133,8 @@ export default class Control extends Component {
             <div className={classnames('Control', className)} {...props}>
                 <div className={classnames('row','block')}>
                     {utility}
+                    {course}
                 </div>
-
             <Players gamename={this.props.gamename} SetAlert={this.props.SetAlert}
                 players={this.props.players} SetActivePlayer={this.props.SetActivePlayer} />
             </div>
