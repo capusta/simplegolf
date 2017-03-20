@@ -39,13 +39,18 @@ export default class Players extends Component {
                 cmp = parseInt(that.props.activehole, 10)
             }
             players.push(
+                //TODO: This seems like a large push for the component to render
+                //especially when the player does not need to be selected in order to increase the score
+                // should probably make this a spearate component ...
                 <div className={classnames('row','text-center','player','pt-3', className)}
                     {...props} onClick={that.SetActive} data-value={p.name} style={divcolor}>
                     <div className={classnames('col','player_name')} onClick={that.SetActive} data-value={p.name}>
                         <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
                 </div>
                 <div className={classnames('col','player_holescore')}>
-                    -- {cmp} --
+                    <span className={classnames("fa","fa-minus-square","fa-2x",)} />
+                    {cmp}
+                    <span className={classnames("fa","fa-plus-square","fa-2x",)} />
                 </div>
                 </div>)
         })
