@@ -10,7 +10,9 @@ export default class Players extends Component {
             players: [],
             activeplayer: null,
         }
-        this.SetActive = this.SetActive.bind(this);
+        this.SetActive       = this.SetActive.bind(this);
+        this.UpdateScoreUp   = this.UpdateScoreUp.bind(this);
+        this.UpdateScoreDown = this.UpdateScoreDown.bind(this);
     }
     //TODO: Detect hole change and update accordingly
     SetActive(e){
@@ -20,12 +22,22 @@ export default class Players extends Component {
         this.setState({activeplayer: n});
         this.props.SetActivePlayer(n);
     }
+    UpdateScoreUp(e){
+        e.preventDefault();
+        var n = e.target.getAttribute('data-value')
+        console.log("updating score +1 for " + n + " for hole " + this.props.activehole)
+    }
+    UpdateScoreDown(e){
+        e.preventDefault();
+        var n = e.target.getAttribute('data-value')
+        console.log("updating score -1 for " + n + " for hole " + this.props.activehole)
+    }
     render(){
         const { className, ...props } = this.props;
         //console.log("Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
         console.log("Players: " +  this.state.activeplayer + "//" + this.props.activehole   )
         var players = [];
-        var divcolor, cmp = null;
+        var divcolor, player = null;
         var that = this
         this.props.players.map(function(p){
             if (p.name == that.state.activeplayer){
@@ -34,9 +46,17 @@ export default class Players extends Component {
                 divcolor = { 'background-color': 'white' }
             }
             if (that.props.activehole == null) {
-                cmp = 'score here'
+                //TODO: calculate total game score
+                player = 'totale score here'
             } else {
-                cmp = parseInt(that.props.activehole, 10)
+                var s = parseInt(that.props.activehole, 10)
+                player = (
+                    <div>
+                        <span className={classnames("fa","fa-minus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreUp} />
+                        {s}
+                        <span className={classnames("fa","fa-plus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreDown} />
+                    </div>
+                )
             }
             players.push(
                 //TODO: This seems like a large push for the component to render
@@ -48,9 +68,7 @@ export default class Players extends Component {
                         <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
                 </div>
                 <div className={classnames('col','player_holescore')}>
-                    <span className={classnames("fa","fa-minus-square","fa-2x",)} />
-                    {cmp}
-                    <span className={classnames("fa","fa-plus-square","fa-2x",)} />
+                    {player}
                 </div>
                 </div>)
         })
