@@ -14,7 +14,6 @@ export default class Players extends Component {
         this.UpdateScoreUp   = this.UpdateScoreUp.bind(this);
         this.UpdateScoreDown = this.UpdateScoreDown.bind(this);
     }
-    //TODO: Detect hole change and update accordingly
     SetActive(e){
         e.preventDefault();
         var n = e.target.getAttribute('data-value')
@@ -47,7 +46,15 @@ export default class Players extends Component {
             }
             if (that.props.activehole == null) {
                 //TODO: calculate total game score
-                player = 'totale score here'
+                var score = 0
+                if (p.course != []){
+                    p.course.reduce(function(acc, val){
+                        acc += val
+                    }, score)
+                }
+                player = (
+                    <p>{ score }</p>
+                )
             } else {
                 var s = parseInt(that.props.activehole, 10)
                 player = (
