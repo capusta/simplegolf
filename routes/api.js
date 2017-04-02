@@ -67,10 +67,17 @@ routes.put('/players/:gameid', (req,res) => {
                 players.insert({name: newname, score: 0, course: []});
             }
         }
-        db.save()
+        db.save();
         res.status(200).json({success: true, name: newname, msg: 'inserted'})
     })
-})
+});
+
+routes.put('/score/:gameid/:player/:dir', (req,res)=> {
+    var gameid  = req.params.gameid,
+        player  = req.params.player,
+        dir     = req.params.dir;
+    console.log("scoring: " + dir + " " + player + " " + gameid)
+});
 
 
 module.exports = routes;

@@ -7,7 +7,6 @@ export default class Players extends Component {
     constructor(props){
         super(props)
         this.state = {
-            players: [],
             activeplayer: null,
         }
         this.SetActive       = this.SetActive.bind(this);
@@ -23,18 +22,20 @@ export default class Players extends Component {
     }
     UpdateScoreUp(e){
         e.preventDefault();
-        var n = e.target.getAttribute('data-value')
-        console.log("updating score +1 for " + n + " for hole " + this.props.activehole)
+        var name = e.target.getAttribute('data-value')
+        this.UpdateScore('somegame',name,'up')
     }
     UpdateScoreDown(e){
         e.preventDefault();
-        var n = e.target.getAttribute('data-value')
-        console.log("updating score -1 for " + n + " for hole " + this.props.activehole)
+        var name = e.target.getAttribute('data-value')
+        this.UpdateScore('somegame',name,'down')
     }
+    UpdateScore(game, player, dir){
+        console.log("Players: updating " + game + " - " + player + "hole: " + this.props.activehole + " - " + dir)
+    };
     render(){
         const { className, ...props } = this.props;
         //console.log("Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
-        console.log("Players: " +  this.state.activeplayer + "//" + this.props.activehole   )
         var players = [];
         var divcolor, player = null;
         var that = this
