@@ -45,7 +45,6 @@ export default class Players extends Component {
                 divcolor = { 'background-color': 'white' }
             }
             if (that.props.activehole == null) {
-                //TODO: calculate total game score
                 var score = 0
                 if (p.course != []){
                     p.course.reduce(function(acc, val){
@@ -56,12 +55,16 @@ export default class Players extends Component {
                     <p>{ score }</p>
                 )
             } else {
-                var s = parseInt(that.props.activehole, 10)
+                //TODO: Player's actual score
+                var tmp = p.course[that.props.activehole]
+                if (!tmp){
+                    tmp = 0;
+                }
                 player = (
                     <div>
-                        <span className={classnames("fa","fa-minus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreUp} />
-                        {s}
-                        <span className={classnames("fa","fa-plus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreDown} />
+                        <span className={classnames("fa","fa-minus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreDown} />
+                        {tmp}
+                        <span className={classnames("fa","fa-plus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreUp} />
                     </div>
                 )
             }
