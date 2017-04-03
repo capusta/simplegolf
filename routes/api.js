@@ -77,6 +77,7 @@ routes.put('/score/:gameid/:player/:dir', (req,res)=> {
         player  = req.params.player,
         dir     = req.params.dir;
     console.log("scoring: " + dir + " " + player + " " + gameid)
+    //TODO: write the rest for adding to db ... up or down
 });
 
 

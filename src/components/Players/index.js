@@ -23,14 +23,15 @@ export default class Players extends Component {
     UpdateScoreUp(e){
         e.preventDefault();
         var name = e.target.getAttribute('data-value')
-        this.UpdateScore('somegame',name,'up')
+        this.UpdateScore(this.props.gamename,name,'up')
     }
     UpdateScoreDown(e){
         e.preventDefault();
         var name = e.target.getAttribute('data-value')
-        this.UpdateScore('somegame',name,'down')
+        this.UpdateScore(this.props.gamename,name,'down')
     }
     UpdateScore(game, player, dir){
+        var that = this;
         console.log("Players: updating " + game + " - " + player + "hole: " + this.props.activehole + " - " + dir)
     };
     render(){
@@ -56,7 +57,6 @@ export default class Players extends Component {
                     <p>{ score }</p>
                 )
             } else {
-                //TODO: Player's actual score
                 var tmp = p.course[that.props.activehole]
                 if (!tmp){
                     tmp = 0;
