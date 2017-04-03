@@ -30,8 +30,13 @@ export default class Control extends Component {
     SetActiveHole(e){
         e.preventDefault();
         var n = e.target.getAttribute('data-value')
-        this.setState({activehole: n})
-        this.props.SetAlert("Hole " + n)
+        if (n){
+            this.setState({activehole: n})
+            this.props.SetAlert("Hole " + n)
+        }else{
+            this.setState({activehole: null})
+            this.props.SetAlert("")
+        }
     }
     HandleEditModeOff(){
         this.setState({editmode: false, userinput: null})
