@@ -47,7 +47,7 @@ export default class Players extends Component {
             }
             if (that.props.activehole == null) {
                 var score = 0
-                if (p.course != []){
+                if (p.course != [] && p.course != undefined){
                     p.course.reduce(function(acc, val){
                         acc += val
                     }, score)
