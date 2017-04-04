@@ -3,7 +3,7 @@ import './style.css'
 import classnames from 'classnames';
 
 export default class Players extends Component {
-    //Props: SetAlert gamename players SetActivePlayer activehole
+    //Props: SetAlert gamename players SetActivePlayer activehole ReloadPlayers
     constructor(props){
         super(props)
         this.state = {
@@ -40,6 +40,7 @@ export default class Players extends Component {
                 })
                 .then(function(data){
                     console.log(JSON.stringify(data))
+                    that.props.ReloadPlayers()
                 })
         console.log("Players: updating " + game + " - " + player + "hole: " + this.props.activehole + " - " + dir)
     };

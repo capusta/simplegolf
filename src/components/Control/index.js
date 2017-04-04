@@ -128,7 +128,7 @@ export default class Control extends Component {
                 </div>
             <Players gamename={this.props.gamename} SetAlert={this.props.SetAlert}
                 players={this.props.players} SetActivePlayer={this.props.SetActivePlayer}
-                activehole={this.state.activehole}/>
+                activehole={this.state.activehole} ReloadPlayers={this.props.ReloadPlayers}/>
             </div>
         );
     }
