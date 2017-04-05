@@ -48,7 +48,7 @@ export default class Players extends Component {
         const { className, ...props } = this.props;
         //console.log("Players length, gamename " + JSON.stringify(this.props.players) + " --- " + this.props.gamename)
         var players = [];
-        var divcolor, player = null;
+        var divcolor, activescore, player = null;
         var that = this
         this.props.players.map(function(p){
             if (p.name == that.state.activeplayer){
@@ -58,23 +58,24 @@ export default class Players extends Component {
             }
             if (that.props.activehole == null) {
                 var score = 0
+                //TODO: good time to go and reload players' scores if necessary
                 if (p.course != [] && p.course != undefined){
-                    p.course.reduce(function(acc, val){
-                        acc += val
-                    }, score)
+                    score = p.course.reduce(function(acc, val){
+                        return acc += val
+                    }, 0)
                 }
                 player = (
                     <p>{ score }</p>
                 )
             } else {
-                var tmp = p.course[that.props.activehole]
-                if (!tmp){
-                    tmp = 0;
+                var score = p.course[that.props.activehole]
+                if (!score){
+                    score = 0;
                 }
                 player = (
                     <div>
                         <span className={classnames("fa","fa-minus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreDown} />
-                        {tmp}
+                        {score}
                         <span className={classnames("fa","fa-plus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreUp} />
                     </div>
                 )
