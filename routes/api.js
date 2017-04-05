@@ -72,12 +72,37 @@ routes.put('/players/:gameid', (req,res) => {
     })
 });
 
-routes.put('/score/:gameid/:player/:dir', (req,res)=> {
-    var gameid  = req.params.gameid,
+routes.put('/score/:gameid/:player/:hole/:dir', (req,res)=> {
+    var gameID  = req.params.gameid,
         player  = req.params.player,
-        dir     = req.params.dir;
-    console.log("scoring: " + dir + " " + player + " " + gameid)
-    //TODO: write the rest for adding to db ... up or down
+        hole    = req.params.hole,
+        dir     = req.params.dir,
+        db_path = DATA_DIR+'/'+gameID+'.json',
+        db      = new loki(db_path,options);
+    db.loadDatabase({},function(){
+        var players = db.getCollection('players');
+        var p       = players.findOne({'name': player});
+        if (!p){
+            res.status(400).json({success: false, msg: player + "not found"})
+            return
+        }
+        // Set the score if not set already
+        if (!p.course[hole]){
+            p.course[hole] = 0
+        }
+        if (dir === 'up'){
+            //Increasing the score
+            p.course[hole] += 1
+        }
+        if (dir === 'down' && p.course[hole] > 0){
+            //Decrement only when we can
+            p.course[hole] -= 1
+        }
+        players.update(p)
+        db.save();
+        res.status(200).json({success: true, score: p.score, hole: p.course[hole], msg: 'Score Updated'})
+    })
+    //res.status(200).json({success: true, score: msg: 'Score Updated'})
 });
 
 
