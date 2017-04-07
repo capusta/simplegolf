@@ -33,7 +33,7 @@ export default class Players extends Component {
     UpdateScore(game, player, dir){
         var that = this;
         fetch(process.env.REACT_APP_BASE_URL+
-            "/api/score/"+that.props.gamename+"/"+player+"/"+dir,
+            "/api/score/"+that.props.gamename+"/"+player+"/"+that.props.activehole+"/"+dir,
                 {method: 'put'})
                 .then(function(res){
                     return res.json();

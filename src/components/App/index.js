@@ -26,7 +26,6 @@ class App extends Component {
     componentDidUpdate(prevProps, prevState){
         if (prevState.gamename == null && this.state.gamename != null){
             this.ReloadPlayers();
-            console.log("Game trainssition to " + this.state.gamename)
             }
         }
     SetAlert(msg){
@@ -44,11 +43,9 @@ class App extends Component {
     UpdateGameName(event){
         event.preventDefault();
         this.setState({userinput: event.target.value})
-        console.log("App userinput " + this.state.userinput)
     }
     ReloadPlayers(){
         var that = this;
-        console.log("App reloading players ")
         fetch(process.env.REACT_APP_BASE_URL+'/api/games/'+this.state.gamename)
         .then(function(res){
             return res.json();

@@ -12,10 +12,8 @@ routes.get('/games/:gameid', (req, res) => {
     var gameID = req.params.gameid
     var db_path = DATA_DIR+'/'+gameID+'.json';
     var db = new loki(db_path, options)
-    console.log("Routes Loading game " + gameID)
     db.loadDatabase({}, function(){
         players = db.getCollection('players')
-        console.log("loaded game " + gameID)
         if (!players){
             db.addCollection('players')
             res.status(200).json({
@@ -37,7 +35,6 @@ routes.get('/games/:gameid', (req, res) => {
 });
 
 routes.put('/players/:gameid', (req,res) => {
-    console.log("body" + JSON.stringify(req.body))
     var gameID     = req.params.gameid,
         oldname    = req.body.oldname,
         newname    = req.body.newname,
@@ -48,7 +45,6 @@ routes.put('/players/:gameid', (req,res) => {
         var oldPlayer = players.findOne({'name': oldname})
         var newPlayer = players.findOne({'name': newname})
         if (newPlayer){
-            console.log("Player exists")
             res.status(400).json({success: false, name: oldname,
             msg: 'Player already exists'})
             return
