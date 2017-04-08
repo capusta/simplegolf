@@ -1,0 +1,3 @@
+#! /bin/bash
+echo "deploying now ... TODO: set env variables here"
+echo 'env vars have to be set before invoking npm start .'
