@@ -1,0 +1,9 @@
+const routes = require('express').Router();
+const logger = require('../lib/logger')
+
+routes.get('/info/gen',(req,res) => {
+    res.status(200).json({
+            success: "true"
+        })
+    })
+module.exports = routes
