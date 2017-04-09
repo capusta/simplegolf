@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "node tests/dbtests.js",
-    "start": "node server",
+    "start": "node --use_strict server.js",
     "build": "react-scripts build"
   }
 }
