@@ -9,7 +9,5 @@ routes.get('/info/gen',(req,res) => {
 
 routes.get('/health,(req,res) =>
 
-//TODO
-
 ')
 module.exports = routes
