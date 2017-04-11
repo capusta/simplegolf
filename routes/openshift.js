@@ -8,6 +8,9 @@ routes.get('/info/gen',(req,res) => {
     })
 
 routes.get('/health,(req,res) =>
-
+    //TODO: Make something more ??? not sure what to respond here
+    // I suppose if this is invoked, then the app is up and running
+    res.writeHead(200);
+    res.end();
 ')
 module.exports = routes
