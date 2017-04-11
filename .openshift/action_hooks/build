@@ -1,2 +1,11 @@
 #! /bin/bash
-echo 'INFO: build started'
+set -eu
+function pretty_date(){
+    echo "$(date "+%H:%M") : "
+}
+
+echo "$(pretty_date) starting build - checking npm and node"
+# Let's check the npm version
+npm -v
+# and node version
+node -v
