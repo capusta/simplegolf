@@ -9,3 +9,4 @@ echo "$(pretty_date) starting build - checking npm and node"
 npm -v
 # and node version
 node -v
+echo "$(pretty_date) finished building" 
