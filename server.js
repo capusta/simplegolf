@@ -13,6 +13,10 @@ app.use(bodyParser.json());
 // Express Router Stuff - mostly JSON calls
 app.use('/api',require('./routes/api'));
 app.use('',require('./routes/openshift'))
+app.use(function (req, res, next) {
+      res.header('Access-Control-Allow-Origin', '*');
+      next();
+})
 
 // React stuff ... routing and static display
 app.use(express.static(path.resolve(__dirname, 'build')));
