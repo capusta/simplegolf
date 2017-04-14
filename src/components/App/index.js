@@ -69,7 +69,7 @@ class App extends Component {
             })
             .then(function(data){
                 if (data.gamename == null) {
-                    that.props.SetAlert("Error parsing game data for  " + data.gamename)
+                    that.SetAlert("Error parsing game data for  " + data.gamename)
                 } else {
                     // Update alert banner
                     that.SetAlert("game loaded")
