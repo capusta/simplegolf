@@ -81,7 +81,7 @@ export default class Control extends Component {
             SetActiveHole={this.SetActiveHole}/> )
         var utility = (
             <div className={classnames("Control")} >
-                <i className={classnames("fa","fa-user-plus","fa-2x")} aria-hidden="true"
+                <i className={classnames("fa","fa-user-plus","fa-3x")} aria-hidden="true"
                     onClick={this.HandleEditModeOn} />
             </div>
         )
@@ -122,7 +122,7 @@ export default class Control extends Component {
         }
         return (
             <div className={classnames('Control', className)} {...props}>
-                <div className={classnames('row','block')}>
+                <div className={classnames('row-fluid','block')}>
                     {utility}
                     {course}
                 </div>
