@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import Control from '../Control'
 import Players from '../Players'
-import Course from '../Course'
 import './style.css';
 
 
