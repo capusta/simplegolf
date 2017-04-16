@@ -3,4 +3,6 @@ echo -e "
 -=-=-=
 Finished Deployment
 -=-=-=
+Listening on ${IP}:${PORT}
+Using baseURL ${REACT_APP_BASE_URL}
 "

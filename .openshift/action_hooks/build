@@ -5,8 +5,21 @@ function pretty_date(){
 }
 
 echo "$(pretty_date) starting build - checking npm and node"
-# Let's check the npm version
-npm -v
-# and node version
-node -v
-echo "$(pretty_date) finished building" 
+
+if [[ -z ${OPENSHIFT_APP_UUID+x} ]]; then
+    # This is somewhere locally
+    echo "$(pretty_date) building locally"
+    export NODE_ENV='development'
+    export IP="localhost"
+    export PORT="8080"
+    export OPENSHIFT_DATA_DIR='data'
+    export REACT_APP_BASE_URL="http://${IP}:${PORT}"
+else
+    export REACT_APP_BASE_URL='http://golfiness.pro'
+fi
+test -e "${OPENSHIFT_DATA_DIR}/.env" && source "${OPENSHIFT_DATA_DIR}/.env"
+
+npm run build
+echo "$(pretty_date) finished building"
+echo "React env vars"
+env | grep -i react
