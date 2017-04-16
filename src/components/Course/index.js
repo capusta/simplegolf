@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
+import './style.css'
 
 export default class Course extends Component {
     //Props: SetActiveHole gamename
@@ -22,7 +23,7 @@ export default class Course extends Component {
                  divcolor = { 'background-color': 'white'}
             }
             course.push(
-                <div className={classnames('col','course-general')} data-value={i}
+                <div className={classnames('col','course-hole')} data-value={i}
                     onClick={this.props.SetActiveHole} style={divcolor}>
                     {h}
                 </div>

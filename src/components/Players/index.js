@@ -73,10 +73,16 @@ export default class Players extends Component {
                     score = 0;
                 }
                 player = (
-                    <div>
+                    <div className={classnames('row', className)}>
+                    <div className={classnames('col', className)}>
                         <span className={classnames("fa","fa-minus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreDown} />
-                        {score}
+                    </div>
+                    <div className={classnames('col', className)}>
+                    <h5>{score}</h5>
+                    </div>
+                    <div className={classnames('col', className)}>
                         <span className={classnames("fa","fa-plus-square","fa-2x",)} data-value={p.name} onClick={that.UpdateScoreUp} />
+                    </div>
                     </div>
                 )
             }
@@ -87,7 +93,7 @@ export default class Players extends Component {
                 <div className={classnames('row','text-center','player','pt-3', className)}
                     {...props} onClick={that.SetActive} data-value={p.name} style={divcolor}>
                     <div className={classnames('col','player_name')} onClick={that.SetActive} data-value={p.name}>
-                        <a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a>
+                        <h4><a href="#" onClick={that.SetActive} data-value={p.name}>{p.name}</a></h4>
                 </div>
                 <div className={classnames('col','player_holescore')}>
                     {player}
