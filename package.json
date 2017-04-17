@@ -17,9 +17,6 @@
   "bugs": {
     "url": "https://github.com/capusta/simplegolf/issues"
   },
-  "devDependencies": {
-    "react-scripts": "0.8.5"
-  },
   "dependencies": {
     "babel": "^6.5.2",
     "body-parser": "^1.16.1",
