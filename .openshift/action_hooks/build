@@ -19,6 +19,7 @@ else
 fi
 test -e "${OPENSHIFT_DATA_DIR}/.env" && source "${OPENSHIFT_DATA_DIR}/.env"
 
+cd "${OPENSHIFT_REPO_DIR}"
 npm run build
 echo "$(pretty_date) finished building"
 echo "React env vars"
